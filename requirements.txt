@@ -1,0 +1,9 @@
+streamlit
+ollama
+pydantic
+python-dotenv
+PyYAML
+beautifulsoup4
+lxml
+pymupdf
+structlog
