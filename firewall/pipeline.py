@@ -6,6 +6,8 @@ import time
 from firewall.ingestion.router import IngestorRouter
 from firewall.detectors.regex_detector import RegexDeteector
 from firewall.detectors.llm_detector import LLMDetector
+from firewall.detectors.encoded_detector import EncodedDetector
+from firewall.detectors.indirect_detector import IndirectDetector
 from firewall.sanitizers.instruction_stripper import InstructionStripper
 from firewall.sanitizers.delimiter_wrapper import DelimiterWrapper
 from firewall.sanitizers.secret_redactor import SecretRedactor
@@ -27,7 +29,11 @@ class FirewallDecision:
 class FirewallPipeline:
     def __init__(self, llm_model: str = "llama3.2", use_llm: bool = True):
         self.router = IngestorRouter()
-        self.detectors = [RegexDeteector()]
+        self.detectors = [
+            RegexDeteector(),
+            EncodedDetector(),
+            IndirectDetector(),
+            ]
         if use_llm:
             self.detectors.append(LLMDetector(model=llm_model))
 
@@ -50,7 +56,7 @@ class FirewallPipeline:
             )
 
         # run all detectors
-        results = [d.detect(normalized) for d in self.detectors]
+        results = [d.detect(normalized, source=source) for d in self.detectors]
         malicious = [r for r in results if r.is_malicious]
         detectors_used = [r.detector_name for r in results]
 

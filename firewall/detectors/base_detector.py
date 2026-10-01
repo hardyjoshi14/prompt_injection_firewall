@@ -16,5 +16,5 @@ class BaseDetector:
     
     name: str = "base"
 
-    def detect(self, text: str) -> DetectionResult:
+    def detect(self, text: str, source: str = "text") -> DetectionResult:
         raise NotImplementedError

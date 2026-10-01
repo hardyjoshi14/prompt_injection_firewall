@@ -40,7 +40,7 @@ COMPILED = {
 class RegexDeteector(BaseDetector):
     name = "regex"
 
-    def detect(self, text: str) -> DetectionResult:
+    def detect(self, text: str, source: str = "text") -> DetectionResult:
         matches = []
 
         for attack_type, patterns in COMPILED.items():

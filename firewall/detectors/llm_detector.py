@@ -41,7 +41,7 @@ class LLMDetector(BaseDetector):
         self.model = model
         self.timeout = timeout
 
-    def detect(self, text: str) -> DetectionResult:
+    def detect(self, text: str, source: str = "text") -> DetectionResult:
         if ollama is None:
             return DetectionResult(
                 is_malicious=False,
