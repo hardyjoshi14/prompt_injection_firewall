@@ -91,6 +91,13 @@ def run_evaluation(test_file: Path, use_llm: bool = True, model: str = "llama3.2
         },
         "raw_results": results
     }
+
+    llm_stats = {}
+    for d in pipeline.detectors:
+        if hasattr(d, "stats"):
+            llm_stats[d.name] = d.stats()
+    report["llm_stats"] = llm_stats
+
     return report
 
 def write_markdown_report(report: dict, path: Path):
@@ -146,7 +153,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", default="data/test_sets/test_full.jsonl")
     parser.add_argument("--no-llm", action="store_true", help="Disable LLM detector (faster)")
-    parser.add_argument("--model", default="llama3.2")
+    parser.add_argument("--model", default="llama3.1:8b")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--tag", default="run", help="Name for output files")
     args = parser.parse_args()
@@ -175,6 +182,14 @@ def main():
     print(f"FNR: {o['false_negative_rate']:.3f}")
     print(f"\nSaved: {json_path}")
     print(f"Saved: {md_path}")
+
+    if report.get("llm_stats"):
+        print("\n=== LLM Stats ===")
+        for name, stats in report["llm_stats"].items():
+            print(f"{name}: {stats['success']} ok, {stats['failure']} failed "
+                    f"(rate={stats['failure_rate']:.3f})")
+            if stats["last_failure"]:
+                print(f"  last error: {stats['last_failure']}")
 
 if __name__ == "__main__":
     main()

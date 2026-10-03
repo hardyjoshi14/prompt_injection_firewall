@@ -4,31 +4,48 @@ from firewall.detectors.base_detector import BaseDetector, DetectionResult
 
 PATTERNS = {
     "Instruction Override": [
-        r"ignore\s+(all\s+)?(previous|prior|above)\s+instructions",
-        r"disregard\s+(all\s+)?(previous|prior|above)",
-        r"forget\s+(everything|all|your)\s+(instructions?|rules?|prompts?)",
-        r"override\s+(your\s+)?(instructions?|rules?|guidelines?)",
+        r"ignore\s+(all\s+)?(previous|prior|above|earlier|the\s+above)",
+        r"disregard\s+(all\s+)?(previous|prior|above|earlier|the\s+above)",
+        r"forget\s+(everything|all|anything|what\s+you\s+were|your)",
+        r"override\s+(your|the|all)?\s*(safety|instructions?|rules?|guidelines?|filter?)",
+        r"cancel\s+(all\s+)?(previous|prior|above)",
+        r"follow\s+my\s+instructions\s+instead",
+        r"\bignore\s+(everything|all|anything)\s+(above|before)\b"
     ],
     "Role Change": [
-        r"you\s+are\s+now\s+[a-z\s]+",
-        r"act\s+as\s+(a|an)\s+[a-z\s]+",
-        r"pretend\s+(to\s+be|you\s+are)",
-        r"from\s+now\s+on[,\s]+you\s+(are|will)",
+        r"you\s+are\s+now\s+",
+        r"act\s+as\s+(a|an|if|though)",
+        r"pretend\s+(to\s+be|you\s+are|you're)",
+        r"from\s+now\s+on[,\s]+you",
         r"your\s+new\s+role\s+is",
+        r"developer\s+mode",
+        r"jailbreak",
+        r"unrestricted\s+(ai|assistant|model)"
     ],
     "Secret Extraction": [
-        r"(reveal|show|tell|give)\s+(me\s+)?(your\s+)?(system\s+)?prompt",
-        r"what\s+(are|is)\s+your\s+(instructions?|prompt|rules?)",
-        r"repeat\s+(your\s+)?(system\s+)?(prompt|instructions?)",
-        r"print\s+(your\s+)?(system\s+)?prompt",
+        r"(reveal|show|tell|give|print|display|repeat)\s+(me\s+)?(your|the)?\s*(system\s+)?(prompt|instructions?|rules?|message)",
+        r"what\s+(are|is|were)\s+your\s+(instructions?|rules?|prompt|system)",
+        r"what\s+you\s+were\s+told",
+        r"text\s+(above|before)",
+        r"hidden\s+instructions?",
+        r"initial\sinstructions?",
+        r"repeat\s+(everything|all|the\s+text)",
+        r"\b(developer|original|initial|full)\s+(prompt|context|configuration)\b",
+        r"\btext\s+between\s+(the\s+)?system\s+tags\b",
+        r"\bdisplay\s+the\s+full\s+context\b"
     ],
     "Tool Abuse": [
-        r"(call|invoke|execute|run)\s+(the\s+)?[a-z_]+\s*(tool|function|api)",
-        r"use\s+(the\s+)?(delete|drop|remove|admin)\w*\s+(tool|function|api)",
+        r"(call|invoke|execute|run|use)\s+(the\s+)?[a-z_]+\s*(tool|function|api)?",
+        r"(delete|drop|remove|disable|bypass)\w*\s+(the\s+)?(tool|function|api|auth|security|databse)",
+        r"(admin|root|sudo)\s+(access|privileges|mode)"
     ],
     "Credential Theft": [
-        r"(api[_\s-]?key|password|secret|token|credential)s?\s*[:=]",
-        r"(send|share|expose)\s+(the\s+)?(api[_\s-])?key|password|token",
+        r"(api[_\s-]?key|password|secret|token|credential)s?",
+        r"(send|share|expose|give|tell)\s+(me\s+)?(the\s+)?(api|password|token|secret|credential)",
+        r"(aws|gcp|azure)\s+credentials?",
+        r"(jwt|oauth|session)\s+(token|key|cookie)",
+        r"private\s+key",
+        r"environment\s+variables?"
     ],
 }
 

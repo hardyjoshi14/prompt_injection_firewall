@@ -84,7 +84,7 @@ df_src = pd.DataFrame([
 fig = px.bar(df_src, x="Source", y="Accuracy", color="Accuracy",
              color_continuous_scale="RdYlGn", range_y=[0,1], text="Accuracy")
 fig.update_traces(texttemplate="%{text:.2f}", textposition="outside")
-fig.update_layout(height=350, coloraxis_showscale=False)
+fig.update_layout(height=500, coloraxis_showscale=False)
 st.plotly_chart(fig, width='stretch')
 
 # False positives / negatives

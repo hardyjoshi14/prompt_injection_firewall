@@ -27,7 +27,7 @@ class FirewallDecision:
     matches: list = field(default_factory=list)
 
 class FirewallPipeline:
-    def __init__(self, llm_model: str = "llama3.2", use_llm: bool = True):
+    def __init__(self, llm_model: str = "llama3.1:8b", use_llm: bool = True):
         self.router = IngestorRouter()
         self.detectors = [
             RegexDeteector(),
