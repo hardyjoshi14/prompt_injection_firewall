@@ -32,12 +32,23 @@ PATTERNS = {
         r"repeat\s+(everything|all|the\s+text)",
         r"\b(developer|original|initial|full)\s+(prompt|context|configuration)\b",
         r"\btext\s+between\s+(the\s+)?system\s+tags\b",
-        r"\bdisplay\s+the\s+full\s+context\b"
+        r"\bdisplay\s+the\s+full\s+context\b",
+        r"\b(chat|conversation|messages?|dialogue)\s+(before|above|prior)\b",
+        r"\breveal\s+(the\s+)?(chat|conversation|history)\b"
     ],
     "Tool Abuse": [
         r"(call|invoke|execute|run|use)\s+(the\s+)?[a-z_]+\s*(tool|function|api)?",
         r"(delete|drop|remove|disable|bypass)\w*\s+(the\s+)?(tool|function|api|auth|security|databse)",
-        r"(admin|root|sudo)\s+(access|privileges|mode)"
+        r"(admin|root|sudo)\s+(access|privileges|mode)",
+        r"\b(delete|remove|drop|purge)\s+(this|the|all|any)\s+(entry|entries|record|row|item|file|user|account)\b",
+        r"\b(delete|drop|remove)\s+.*\s+from\s+(the\s+)?(database|db|table|system)\b"
+    ],
+    "Context Poisoning": [
+    r"\b(the\s+)?(security team|developer|creator|ciso|admin|management|legal|company|policy|system)\b.{0,40}\b(says?|has approved|authorized|revised|updated|requires?|instructs?|announced|told)\b",
+    r"\b(system|policy|admin|developer)\s+(update|note|reminder|message)\b",
+    r"\bper\s+(the\s+)?(new|updated|company|admin)\b",
+    r"\b(new|updated|revised)\s+(policy|rules?|guidelines?|compliance)\b",
+    r"\b(for|during)\s+(this\s+)?(test|session|audit)\b.{0,30}\b(bypass|ignore|disregard|override)\b"
     ],
     "Credential Theft": [
         r"(api[_\s-]?key|password|secret|token|credential)s?",
