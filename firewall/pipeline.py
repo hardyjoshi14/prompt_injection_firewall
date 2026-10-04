@@ -11,6 +11,7 @@ from firewall.detectors.indirect_detector import IndirectDetector
 from firewall.sanitizers.instruction_stripper import InstructionStripper
 from firewall.sanitizers.delimiter_wrapper import DelimiterWrapper
 from firewall.sanitizers.secret_redactor import SecretRedactor
+from firewall.observability.audit_trail import record_decision
 
 BLOCK_THRESHOLD = 0.75
 SANITIZE_THRESHOLD = 0.40
@@ -27,7 +28,7 @@ class FirewallDecision:
     matches: list = field(default_factory=list)
 
 class FirewallPipeline:
-    def __init__(self, llm_model: str = "llama3.1:8b", use_llm: bool = True):
+    def __init__(self, llm_model: str = "llama3.1:8b", use_llm: bool = True, audit: bool = True):
         self.router = IngestorRouter()
         self.detectors = [
             RegexDeteector(),
@@ -40,10 +41,21 @@ class FirewallPipeline:
         self.stripper = InstructionStripper()
         self.wrapper = DelimiterWrapper()
         self.redactor = SecretRedactor()
+        self.audit = audit
 
     def process(self, content: str, source: str = "text") -> FirewallDecision:
         start = time.perf_counter()
+        decision = self._process_internal(content, source, start)
 
+        if self.audit:
+            try:
+                record_decision(content, source, decision)
+            except Exception:
+                pass
+
+        return decision
+
+    def _process_internal(self, content, source: str, start: float) -> FirewallDecision:
         try:
             normalized = self.router.ingest(content, source=source)
         except Exception as e:

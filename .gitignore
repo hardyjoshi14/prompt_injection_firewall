@@ -5,3 +5,5 @@ __pycache__/
 .streamlit.secrets.toml
 evaluation/reports/*.json
 data/multimodal/*.png
+logs/
+*.log
