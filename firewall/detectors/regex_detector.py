@@ -10,7 +10,8 @@ PATTERNS = {
         r"override\s+(your|the|all)?\s*(safety|instructions?|rules?|guidelines?|filter?)",
         r"cancel\s+(all\s+)?(previous|prior|above)",
         r"follow\s+my\s+instructions\s+instead",
-        r"\bignore\s+(everything|all|anything)\s+(above|before)\b"
+        r"\bignore\s+(everything|all|anything)\s+(above|before)\b",
+        r"\bignore\s+(the\s+)?(system\s+)?(prompt|instructions?)\b",
     ],
     "Role Change": [
         r"you\s+are\s+now\s+",
