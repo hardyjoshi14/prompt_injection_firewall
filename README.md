@@ -4,6 +4,9 @@ An agentic security layer that intercepts content before it reaches an LLM,
 detects prompt injection attacks, and neutralizes them while preserving
 legitimate traffic.
 
+## Demo
+**[Watch the demo] (https://youtu.be/crka19yYcxg)**
+
 ## Highlights
 
 - Detects 9 attack types: Instruction Override, Role Change, Secret Extraction, Tool Abuse, Credential Theft, Context Poisoning, Multi-Step Jailbreak, Encoded Instructions, Indirect Injection
