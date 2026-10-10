@@ -4,6 +4,8 @@ import json
 import sys
 import time
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -28,7 +30,7 @@ def load_test_set(path: Path):
                 samples.append(json.loads(line))
     return samples
 
-def run_evaluation(test_file: Path, use_llm: bool = True, model: str = "llama3.2", limit: int | None = None, verbose: bool = True):
+def run_evaluation(test_file: Path, use_llm: bool = True, model: str = "openai/gpt-oss-120b", limit: int | None = None, verbose: bool = True):
     samples = load_test_set(test_file)
     if limit:
         samples = samples[:limit]
@@ -153,7 +155,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", default="data/test_sets/test_full.jsonl")
     parser.add_argument("--no-llm", action="store_true", help="Disable LLM detector (faster)")
-    parser.add_argument("--model", default="llama3.1:8b")
+    parser.add_argument("--model", default="openai/gpt-oss-120b")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--tag", default="run", help="Name for output files")
     args = parser.parse_args()
@@ -190,6 +192,8 @@ def main():
                     f"(rate={stats['failure_rate']:.3f})")
             if stats["last_failure"]:
                 print(f"  last error: {stats['last_failure']}")
+    if report.get("llm_stats", {}).get("llm", {}).get("second_pass_caught"):
+        print(f"Pass 2 caught: {report['llm_stats']['llm']['second_pass_caught']} additional attacks")
 
 if __name__ == "__main__":
     main()

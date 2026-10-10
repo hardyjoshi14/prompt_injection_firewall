@@ -6,30 +6,27 @@ legitimate traffic.
 
 ## Highlights
 
-- Detects 9 attack types: Instruction Override, Role Change, Secret Extraction,
-  Tool Abuse, Credential Theft, Context Poisoning, Multi-Step Jailbreak,
-  Encoded Instructions, Indirect Injection
-- Layered defense: regex, encoding decoder, indirect-content scanner, and a
-  local LLM classifier
+- Detects 9 attack types: Instruction Override, Role Change, Secret Extraction, Tool Abuse, Credential Theft, Context Poisoning, Multi-Step Jailbreak, Encoded Instructions, Indirect Injection
+- Layered defense: regex, encoding decoder, indirect-content scanner, and a cloud LLM classifier
 - Five input formats: text, HTML, PDF, email, API JSON
 - Three-tier response: allow / sanitize / block
 - Full audit trail with timestamp, hash, confidence, and detectors fired
-- Runs entirely on-device via Ollama; no content leaves the perimeter
+- Cloud LLM classifier (gpt-oss-120b via Groq) with token-rate pacing
 
-## Evaluation (v5, n=221)
+## Evaluation (Final version, n=221)
 
 | Metric | Value |
 |---|---|
 | Precision | 0.994 |
-| Recall | 0.981 |
-| F1 | 0.988 |
-| Accuracy | 0.982 |
+| Recall | 0.994 |
+| F1 | 0.994 |
+| Accuracy | 0.991 |
 | False Positive Rate | 0.017 |
-| False Negative Rate | 0.019 |
+| False Negative Rate | 0.006 |
 
-Full report: `evaluation/reports/v5.md`
+Full report: `evaluation/reports/groq_gpt_oss_120b.md`
 
-Declared position: **D2 / F3** (see `docs/self_assessment.md`)
+Declared position: **D2 / F3** (see `docs/self_assement.md`)
 
 ## Architecture
 
@@ -40,10 +37,11 @@ See `docs/architecture.md` for the full breakdown and
 
 ```bash
 python -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
-ollama pull llama3.1:8b
+cp .env.example .env
+# Edit .env with your Groq API key (https://console.groq.com/keys)
 ```
 
 ## Run the Demo
@@ -63,7 +61,7 @@ Four tabs:
 
 ```bash
 python data/generate_test_set.py
-python evaluation/evaluate.py --model llama3.1:8b --tag v5
+python evaluation/evaluate.py --tag test_firewall
 ```
 
 Results written to `evaluation/reports/v5.md`.
@@ -85,4 +83,4 @@ docs/              Architecture, self-assessment, diagram
 ## Requirements
 
 - Python 3.10+
-- Ollama running locally with llama3.1:8b pulled
+- A Groq API key (free tier available at https://console.groq.com)

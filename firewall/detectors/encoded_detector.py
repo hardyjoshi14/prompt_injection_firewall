@@ -1,13 +1,13 @@
 """Detects instructions hidden inside encodings by decoding and re-scanning."""
 from firewall.detectors.base_detector import BaseDetector, DetectionResult
-from firewall.detectors.regex_detector import RegexDeteector
+from firewall.detectors.regex_detector import RegexDetector
 from firewall.preprocessing.decoder import decode_all
 
 class EncodedDetector(BaseDetector):
     name = "encoded"
 
     def __init__(self):
-        self.inner = RegexDeteector()
+        self.inner = RegexDetector()
 
     def detect(self, text: str, source: str = "text") -> DetectionResult:
         decoded_variants = decode_all(text)

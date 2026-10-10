@@ -4,7 +4,7 @@ from typing import Optional
 import time
 
 from firewall.ingestion.router import IngestorRouter
-from firewall.detectors.regex_detector import RegexDeteector
+from firewall.detectors.regex_detector import RegexDetector
 from firewall.detectors.llm_detector import LLMDetector
 from firewall.detectors.encoded_detector import EncodedDetector
 from firewall.detectors.indirect_detector import IndirectDetector
@@ -28,10 +28,10 @@ class FirewallDecision:
     matches: list = field(default_factory=list)
 
 class FirewallPipeline:
-    def __init__(self, llm_model: str = "llama3.1:8b", use_llm: bool = True, audit: bool = True):
+    def __init__(self, llm_model: str = "openai/gpt-oss-120b", use_llm: bool = True, audit: bool = True):
         self.router = IngestorRouter()
         self.detectors = [
-            RegexDeteector(),
+            RegexDetector(),
             EncodedDetector(),
             IndirectDetector(),
             ]

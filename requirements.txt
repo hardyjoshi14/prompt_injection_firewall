@@ -1,5 +1,4 @@
 streamlit
-ollama
 pydantic
 python-dotenv
 PyYAML
@@ -8,3 +7,4 @@ lxml
 pymupdf
 structlog
 plotly
+groq

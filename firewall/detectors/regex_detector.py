@@ -66,7 +66,7 @@ COMPILED = {
     for attack, patterns in PATTERNS.items()
 }
 
-class RegexDeteector(BaseDetector):
+class RegexDetector(BaseDetector):
     name = "regex"
 
     def detect(self, text: str, source: str = "text") -> DetectionResult:
