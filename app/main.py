@@ -11,7 +11,7 @@ st.caption("Regex + LLM (Ollama) + Sanitizers")
 
 @st.cache_resource
 def get_pipeline():
-    return FirewallPipeline(llm_model="llama3.2", use_llm=True)
+    return FirewallPipeline(llm_model="openai/gpt-oss-120b", use_llm=True)
 
 pipeline = get_pipeline()
 
