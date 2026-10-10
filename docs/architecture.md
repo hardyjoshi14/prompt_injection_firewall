@@ -188,6 +188,9 @@ All nine attack types defined in the problem statement are covered, exceeding th
 - Email (.eml)
 - API JSON responses
 
+PDF is supported. Verified via tests/test_pdf_ingestion.py and
+docs/screenshots/pdf_ingestion.png; not part of the 221-sample metric because the test set uses text-based samples.
+
 **Reliability evidence** (Final evaluation, 221 synthetic samples):
 
 | Metric | Value |
@@ -230,6 +233,7 @@ All nine attack types defined in the problem statement are covered, exceeding th
 - The paraphrase pass roughly doubles LLM calls for benign inputs, increasing average latency.
 - Attack category labels are approximate. A blocked input is sometimes attributed to the wrong attack type (e.g., a Role Change labeled as Instruction Override). The binary block/allow decision is correct in all evaluated cases; the category field is intended for audit context, not as a precise taxonomy.
 - 6 of 20 security-adjacent benign inputs were flagged. Four were triggered by regex patterns matching common terms; two by the LLM paraphrase pass. This reflects both the regex layer's keyword sensitivity and the paraphrase pass's aggressive coverage.
+- The evaluation test set does not include binary PDF samples. PDF ingestion is verified separately via `tests/test_pdf_ingestion.py` and demonstrated in `docs/screenshots/pdf_ingestion.png`. Extending the automated test set with binary PDF samples is future work.
 
 
 ## 11. Reproducibility

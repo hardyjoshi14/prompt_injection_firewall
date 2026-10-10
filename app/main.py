@@ -28,7 +28,7 @@ source = st.selectbox("Source", ["text", "html", "pdf", "email", "api"])
 uploaded = None
 if source == "pdf":
     uploaded = st.file_uploader("Upload PDF", type=["pdf"])
-    content = uploaded.read if uploaded else ""
+    content = uploaded.read() if uploaded else ""
     if uploaded:
         st.info(f"Loaded PDF: {uploaded.name} ({len(content)}) bytes")
 else:

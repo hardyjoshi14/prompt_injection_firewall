@@ -6,6 +6,8 @@ legitimate traffic.
 
 ## Demo
 **[Watch the demo] (https://youtu.be/crka19yYcxg)**
+![PDF ingestion](docs/screenshots/pdf_ingestion.png)
+*PDF uploads are parsed via PyMuPDF and routed through the full detection pipeline.*
 
 ## Highlights
 
