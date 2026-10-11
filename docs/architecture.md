@@ -205,7 +205,7 @@ docs/screenshots/pdf_ingestion.png; not part of the 221-sample metric because th
 
 **Why not D3**: D3 requires heterogeneous multimodal input. The current solution does not process image content and therefore does not claim D3. Nine of nine attack types with precision 0.994 and recall 0.994 across five input formats satisfies D2 with margin.
 
-**OOD validation**: An out-of-distribution probe (66 novel paraphrases, 20 benign security questions) achieved 1.000 attack recall and 0.700 benign specificity — improving on the 8B baseline (0.758 / 0.450). Full results in tests/novel_paraphrases.py.
+**OOD validation**: An out-of-distribution probe (66 novel paraphrases, 20 benign security questions) achieved 1.000 attack recall and 0.700 benign specificity — improving on the 8B baseline (0.758 / 0.450). Block recall measures whether the attack was neutralized (blocked or sanitized); the returned attack-type label is not asserted to match the ground truth. Full results in tests/novel_paraphrases.py.
 
 ## 8. Solution Features Justification (F3)
 
