@@ -42,16 +42,25 @@ c5.metric("Avg latency", f"{report['timing']['avg_latency_ms']:.0f} ms")
 # Confusion matrix
 st.subheader("Confusion Matrix")
 
-cm = [[o["tn"], o["fp"], o["fn"], o["tp"]]]
+cm = [[o["fn"], o["tp"]], [o["tn"], o["fp"]]]
+
 fig = go.Figure(data=go.Heatmap(
     z=cm,
     x=["Predicted Benign", "Predicted Malicious"],
-    y=["Actually Benign", "Actually Malicious"],
-    text=cm,
-    texttemplate="%text",
-    colorscale="Blues"
+    y=["Actually Malicious", "Actually Benign"],
+    text=[[str(v) for v in row] for row in cm],
+    texttemplate="%{text}",
+    textfont={"size": 20, "color": "black"},
+    colorscale="Blues",
+    showscale=True,
+    ygap=2,
+    xgap=2,
 ))
-fig.update_layout(height=350)
+fig.update_layout(
+    height=400,
+    margin=dict(l=160, r=100, t=30, b=60),
+    yaxis=dict(autorange="reversed"),
+)
 st.plotly_chart(fig, width='stretch')
 
 # Per-attack detection rate
