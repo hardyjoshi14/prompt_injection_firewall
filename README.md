@@ -7,6 +7,7 @@ legitimate traffic.
 ## Demo
 **3-minute pitch:** [Youtube video](https://youtu.be/wUqgVXSHPzY)
 **Extended technical walkthrough:** [Youtube video](https://youtu.be/crka19yYcxg)
+
 ![PDF ingestion](docs/screenshots/pdf_ingestion.png)
 *PDF uploads are parsed via PyMuPDF and routed through the full detection pipeline.*
 
